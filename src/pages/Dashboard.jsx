@@ -1,7 +1,25 @@
-import React from 'react';
 import { auth } from '../firebase/config';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { MainContainer, AuthCard, PrimaryButton } from '../styles/AuthStyles';
+
+const DashboardContainer = styled(MainContainer)`
+  align-items: flex-start;
+  padding-top: 4rem;
+`;
+
+const DashboardCard = styled(AuthCard)`
+  max-width: 600px;
+`;
+
+const SignOutButton = styled(PrimaryButton)`
+  background-color: #ef4444;
+  
+  &:hover {
+    background-color: #dc2626;
+  }
+`;
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -10,20 +28,20 @@ export default function Dashboard() {
     try {
       await signOut(auth);
     } catch(err) {
-      console.error(err);
+      // Error signing out
     }
     navigate('/signin');
   };
 
   return (
-    <div className="main-container" style={{ flex: 1, alignItems: 'flex-start', paddingTop: '4rem' }}>
-      <div className="auth-card" style={{ maxWidth: '600px' }}>
+    <DashboardContainer>
+      <DashboardCard>
         <h2>Dashboard</h2>
         <p>Welcome to Splitwise. Your expense analytics will appear here.</p>
-        <button onClick={handleSignOut} className="btn-primary" style={{ backgroundColor: '#ef4444' }}>
+        <SignOutButton onClick={handleSignOut}>
           Sign Out
-        </button>
-      </div>
-    </div>
+        </SignOutButton>
+      </DashboardCard>
+    </DashboardContainer>
   );
 }

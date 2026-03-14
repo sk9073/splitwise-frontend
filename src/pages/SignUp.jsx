@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase/config';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  MainContainer,
+  AuthCard,
+  FormGroup,
+  StyledInput,
+  PrimaryButton,
+  GoogleButton,
+  Divider,
+  AuthFooter,
+  ErrorMessage
+} from '../styles/AuthStyles';
 
 export default function SignUp() {
   const [name, setName] = useState('');
@@ -19,7 +30,6 @@ export default function SignUp() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       
       // TODO: Save the user's name in database or Firebase Auth profile.
-      console.log("Created user:", userCredential.user.email, name);
       
       navigate('/dashboard');
     } catch (err) {
@@ -42,81 +52,68 @@ export default function SignUp() {
   };
 
   return (
-    <div className="main-container">
-      <div className="auth-card">
+    <MainContainer>
+      <AuthCard>
         <h2>Create an Account</h2>
         <p>Join Splitwise and start simplifying your debts.</p>
 
-        {error && <div style={{ color: 'red', marginBottom: '1rem', fontSize: '0.9rem', textAlign: 'center', background: '#fee2e2', padding: '0.5rem', borderRadius: '8px' }}>{error}</div>}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
 
         <form onSubmit={handleSignUp}>
-          <div className="form-group">
+          <FormGroup>
             <label>Full Name</label>
-            <input 
+            <StyledInput 
               type="text" 
-              className="form-control" 
               placeholder="Elon Musk"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required 
             />
-          </div>
-          <div className="form-group">
+          </FormGroup>
+          <FormGroup>
             <label>Email Address</label>
-            <input 
+            <StyledInput 
               type="email" 
-              className="form-control" 
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required 
             />
-          </div>
-          <div className="form-group">
+          </FormGroup>
+          <FormGroup>
             <label>Password</label>
-            <input 
+            <StyledInput 
               type="password" 
-              className="form-control" 
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required 
               minLength="6"
             />
-          </div>
-          <button type="submit" className="btn-primary" disabled={loading}>
+          </FormGroup>
+          <PrimaryButton type="submit" disabled={loading}>
             {loading ? 'Creating Account...' : 'Sign Up'}
-          </button>
+          </PrimaryButton>
         </form>
 
-        <div style={{ display: 'flex', alignItems: 'center', margin: '1.5rem 0' }}>
-          <hr style={{ flex: 1, border: 'none', borderTop: '1px solid var(--border)' }} />
-          <span style={{ padding: '0 1rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>OR</span>
-          <hr style={{ flex: 1, border: 'none', borderTop: '1px solid var(--border)' }} />
-        </div>
+        <Divider>
+          <hr />
+          <span>OR</span>
+          <hr />
+        </Divider>
 
-        <button 
+        <GoogleButton 
           onClick={handleGoogleSignIn} 
-          className="btn-primary" 
           disabled={loading}
-          style={{ 
-            backgroundColor: 'white', 
-            color: 'var(--text-main)', 
-            border: '1px solid var(--border)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem'
-          }}
         >
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: '18px', height: '18px' }} />
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
           Sign Up with Google
-        </button>
+        </GoogleButton>
 
-        <div className="auth-footer">
+        <AuthFooter>
           Already have an account? <Link to="/signin">Sign In</Link>
-        </div>
-      </div>
-    </div>
+        </AuthFooter>
+      </AuthCard>
+    </MainContainer>
   );
 }
