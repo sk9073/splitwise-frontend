@@ -1,5 +1,8 @@
 {
   "hosting": {
+    "predeploy": [
+      "npm run build"
+    ],
     "site": "split-the-expenses",
     "public": "dist",
     "ignore": [
@@ -13,5 +16,14 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
   }
 }

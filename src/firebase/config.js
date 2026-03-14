@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, connectAuthEmulator } from "firebase/auth";
 
 // TODO: Replace with your Firebase project configuration
 const firebaseConfig = {
@@ -15,3 +15,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
+
+// Connect to emulator in development
+if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+  connectAuthEmulator(auth, "http://localhost:9099");
+}

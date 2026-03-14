@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase/config';
 import { Link, useNavigate } from 'react-router-dom';
+import { userService } from '../services/api';
 import {
   MainContainer,
   AuthCard,
@@ -26,7 +27,10 @@ export default function SignIn() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Wait for JWT and pass it to backend eventually
+      
+      // Ensure user is registered in our backend
+      await userService.register();
+      
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
@@ -39,6 +43,10 @@ export default function SignIn() {
     setLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
+      
+      // Ensure user is registered in our backend
+      await userService.register();
+      
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);

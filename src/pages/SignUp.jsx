@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase/config';
 import { Link, useNavigate } from 'react-router-dom';
+import { userService } from '../services/api';
 import {
   MainContainer,
   AuthCard,
@@ -27,9 +28,10 @@ export default function SignUp() {
     setLoading(true);
     try {
       // Create user in firebase
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       
-      // TODO: Save the user's name in database or Firebase Auth profile.
+      // Register user in our backend
+      await userService.register();
       
       navigate('/dashboard');
     } catch (err) {
@@ -43,6 +45,10 @@ export default function SignUp() {
     setLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
+      
+      // Register/Login user in our backend
+      await userService.register();
+      
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
