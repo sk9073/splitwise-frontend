@@ -38,9 +38,14 @@ export default function Dashboard() {
       <DashboardCard>
         <h2>Dashboard</h2>
         <p>Welcome to Splitwise. Your expense analytics will appear here.</p>
-        <SignOutButton onClick={handleSignOut}>
-          Sign Out
-        </SignOutButton>
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+          <PrimaryButton onClick={() => navigate('/profile')}>
+            Edit Profile
+          </PrimaryButton>
+          <SignOutButton onClick={handleSignOut}>
+            Sign Out
+          </SignOutButton>
+        </div>
       </DashboardCard>
     </DashboardContainer>
   );

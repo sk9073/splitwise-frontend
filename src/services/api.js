@@ -32,6 +32,24 @@ export const userService = {
       throw error;
     }
   },
+  getUserProfile: async () => {
+    try {
+      const response = await apiClient.get('/users/me');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      throw error;
+    }
+  },
+  updateUserProfile: async (data) => {
+    try {
+      const response = await apiClient.patch('/users/me', data);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      throw error;
+    }
+  },
 };
 
 export default apiClient;

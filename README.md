@@ -1,16 +1,38 @@
-# React + Vite
+# Splitwise Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The user interface for the Splitwise Clone, integrated with Firebase Auth.
 
-Currently, two official plugins are available:
+## 🛠 Local Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Install Dependencies
+```bash
+npm install
+```
 
-## React Compiler
+### 2. Firebase Emulator
+To test authentication locally without hitting live Firebase:
+```bash
+firebase emulators:start
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 3. Start Dev Server
+```bash
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## 🌐 Deployment (Firebase Hosting)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Build & Deploy
+The `firebase.json` is configured with a `predeploy` hook that runs `npm run build` automatically.
+```bash
+npx firebase deploy --only hosting
+```
+
+### 2. Environment Variables
+- `.env.local`: Used during `npm run dev`.
+- `.env.production`: Used during `npm run build` for deployment.
+
+## 🎨 Tech Highlights
+- **Styled Components**: For modular, reusable styling.
+- **Firebase Auth**: Google Sign-In and Email/Password flows.
+- **API Service**: Centralized `src/services/api.js` with automatic token injection.
