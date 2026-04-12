@@ -6,6 +6,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Contacts from './pages/Contacts';
 import {
   AppHeader,
   Brand,
@@ -36,6 +37,7 @@ function App() {
           {user ? (
             <>
               <NavLink to="/dashboard">Dashboard</NavLink>
+              <NavLink to="/contacts">Contacts</NavLink>
               <NavLink to="/profile">Profile</NavLink>
             </>
           ) : (
@@ -50,6 +52,7 @@ function App() {
         <Route path="/signin" element={user ? <Navigate to="/dashboard" /> : <SignIn />} />
         <Route path="/signup" element={user ? <Navigate to="/dashboard" /> : <SignUp />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/signin" />} />
+        <Route path="/contacts" element={user ? <Contacts /> : <Navigate to="/signin" />} />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/signin" />} />
         <Route path="/" element={<Navigate to={user ? "/dashboard" : "/signin"} />} />
       </Routes>
